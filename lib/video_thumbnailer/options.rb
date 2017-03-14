@@ -13,8 +13,12 @@ module VideoThumbnailer
     end
 
     def to_options
+      filter = @ptions.delete(:filter)
       result = @ptions.map do |k, v|
         send(k.to_s, v)
+      end
+      if filter
+        result << "-filter:v \"#{filter}\""
       end
       result << "-vframes 1"
       result.join(' ')
